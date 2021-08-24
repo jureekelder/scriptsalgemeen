@@ -10,6 +10,7 @@
 #all_sheets = FALSE --> OPTIONEEL: boolean. In het geval van EXCEl kun je op TRUE zetten als alle tabbladen moeten worden ingelezen. 
 #fieldSeperator = ";" --> OPTIONEEL: string. Welke string wordt gebruikt voor scheidingsteken in .csv bestanden?
 
+#wat moet ik hier mee?
 
 getDataInFolder <- function(folder_name, patternFile = NULL, sheetList = 1, all_sheets = FALSE, fieldSeperator = ";") {
   
