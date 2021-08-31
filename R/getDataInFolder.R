@@ -184,7 +184,7 @@ getDataInFolder <- function(folder_name, patternFile = NULL, sheetList = 1, all_
   
 
   outputToLog("Data inlezen klaar; totaal aantal rijen:", nrow(data_all_files))
-  outputToLog("En aantal kolommen:", ncol(data_all_files))
+  outputToLog("En aantal kolommen: ", ncol(data_all_files))
   
   #Terugzetten working directory
   setwd(original_wd)
