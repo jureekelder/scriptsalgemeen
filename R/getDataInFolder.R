@@ -25,21 +25,36 @@ getDataInFolder <- function(folder_name, patternFile = NULL, sheetList = 1, all_
   }
   
   #Krijg de Working Directory van de huidige map.
-  current_folder = getwd()
-  current_folder_list = list.files()
+  original_wd = getwd()
   
-  #Check of de opgegeven map bestaat
-  if(any(grepl(folder_name, current_folder_list))){
+  #Is de folder_name een mapnaam of een path
+  if(grepl(folder_name, "/")){
     
-    #Ja, de map bestaat.
-    folder_directory = paste(current_folder, "/", folder_name, sep = "")
-    #Zet de Working Directory naar de locatie van de map
-    setwd(folder_directory)
+    setwd(folder_name)
     
+    folder_directory = folder_name
     
   } else {
-    stop(paste("Map genaamd: ", folder_name, " niet kunnen vinden!", sep = ""))
+    
+    current_folder = getwd()
+    current_folder_list = list.files()
+    
+    #Check of de opgegeven map bestaat
+    if(any(grepl(folder_name, current_folder_list))){
+      
+      #Ja, de map bestaat.
+      folder_directory = paste(current_folder, "/", folder_name, sep = "")
+      #Zet de Working Directory naar de locatie van de map
+      setwd(folder_directory)
+      
+      
+    } else {
+      stop(paste("Map genaamd: ", folder_name, " niet kunnen vinden!", sep = ""))
+    }
+    
   }
+  
+
   
   outputToLog("Map voor inputdata is nu:", folder_directory)
   outputToLog("Zoeken naar bestanden die hetvolgende bevatten:", patternFile)
@@ -172,6 +187,8 @@ getDataInFolder <- function(folder_name, patternFile = NULL, sheetList = 1, all_
   outputToLog("Data inlezen klaar; totaal aantal rijen:", nrow(data_all_files))
   outputToLog("En aantal kolommen:", ncol(data_all_files))
   
+  #Terugzetten working directory
+  setwd(original_wd)
   
   return(data_all_files)
 }
