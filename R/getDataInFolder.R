@@ -16,6 +16,7 @@ getDataInFolder <- function(folder_name, patternFile = NULL, sheetList = 1, all_
   
   #Voor functie read_excel()
   library(readxl) 
+  library(stringr)
   
   #Algemene functie voor loggen van voortgang
   outputToLog <- function(name, quantity = NULL){
@@ -28,7 +29,7 @@ getDataInFolder <- function(folder_name, patternFile = NULL, sheetList = 1, all_
   original_wd = getwd()
   
   #Is de folder_name een mapnaam of een path
-  if(grepl(folder_name, "/")){
+  if(str_detect(folder_name, "/")){
     
     setwd(folder_name)
     
@@ -40,7 +41,7 @@ getDataInFolder <- function(folder_name, patternFile = NULL, sheetList = 1, all_
     current_folder_list = list.files()
     
     #Check of de opgegeven map bestaat
-    if(any(grepl(folder_name, current_folder_list))){
+    if(any(str_detect(folder_name, current_folder_list))){
       
       #Ja, de map bestaat.
       folder_directory = paste(current_folder, "/", folder_name, sep = "")
@@ -78,13 +79,13 @@ getDataInFolder <- function(folder_name, patternFile = NULL, sheetList = 1, all_
       file_name = file_list[j]
       
       #Als een bestand nog geopend is dan vind R ook een kopie ervan in de map, deze geeft problemen dus overslaan!
-      if (grepl("~", file_name)) {
+      if (str_detect(file_name, "~")) {
         next
       }
       
       #Is het een EXCEL bestand?
       is_excel_sheet = FALSE
-      if(grepl(".xl", file_name)){
+      if(str_detect(file_name, ".xl")){
         is_excel_sheet = TRUE
         outputToLog("Bestand is een EXCEL")
       }
