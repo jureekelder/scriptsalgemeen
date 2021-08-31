@@ -167,7 +167,7 @@ getDataInFolder <- function(folder_name, patternFile = NULL, sheetList = 1, all_
           #Hebben de bestanden wél hetzelfe aantal rijen?
           
           if(nrow(data_all_files) == nrow(data_current_file)){
-            data_all_files = cbind(data_all_files, data_current_file)
+            data_all_files = merge(data_all_files, data_current_file, all = TRUE)
           } else {
             stop("De data kan niet samengevoegd worden")
           }
@@ -183,8 +183,8 @@ getDataInFolder <- function(folder_name, patternFile = NULL, sheetList = 1, all_
   }
   
 
-  outputToLog("Data inlezen klaar; totaal aantal rijen:", nrow(data_all_files))
-  outputToLog("En aantal kolommen: ", ncol(data_all_files))
+  outputToLog("Data inlezen klaar; totaal aantal rijen", nrow(data_all_files))
+  outputToLog("En aantal kolommen", ncol(data_all_files))
   
   #Terugzetten working directory
   setwd(original_wd)
